@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .container {
+            width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .kotak-atas {
+            /* background-image: linear-gradient(rgb(76, 131, 235),rgb(16, 19, 218)); */
+            background-image: url(img/gaj.jpg);
+            background-size: 130%;
+            background-position-y: -5px;
+            height: 300px;
+            clip-path: inset(0 0 40px 0);
+            text-align: center; 
+        }
+
+        .kotak-bawah{
+            /* background-image: linear-gradient(rgb(146, 243, 137),rgb(4, 99, 4)); */
+            background-image: url(img/gaj.jpg);
+            background-size: 130%;
+            background-position-y: -280px;
+            height: 300px;
+            text-align: center; 
+        }
+        
+        .kotak-bawah img {
+            margin-left: 20px;
+            margin-right: 20px;
+            transition: .3s;
+        }
+
+        .kotak-bawah img:hover{
+            filter: drop-shadow(5px 5px 5px rgba(143, 219, 168, 0.8));
+            cursor: pointer;
+        }
+
+        .hasil{
+            width: 100px;
+            height: 50px;
+            border: 4px solid salmon;
+            border-radius: 40px;
+            position: absolute;
+            top: 42%;
+            left: 45%; 
+            background-color: white;
+            text-align: center;
+            color: salmon;
+        }
+
+        .hasil span {
+            font-weight: bold;
+            line-height: 50px;
+        }
+
+        .komputer, .pemain {
+            margin-top: 60px;
+        }
+
+    </style>
+</head>
+
+<div class="container">
+    <div class="kotak-atas">
+        <img id="komputer" class="komputer" src="img/orang.png" style="width: 150px;">
+    </div>
+    <div class="kotak-bawah">
+        <img id="gajah" class="pemain" src="img/gajah.png" style="width: 150px;">
+        <img id="orang" class="pemain" src="img/orang.png" style="width: 150px;">
+        <img id="semut" class="pemain" src="img/semut.png" style="width: 150px;">
+    </div>
+    <div class="hasil">
+        <span id="hasil">START!</span>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $('.pemain').click(function () {
+        let pilihan = $(this).attr('id');
+        console.log(pilihan);
+
+        console.log();
+        let bot = Math.random();
+        let pilihan_bot = '';
+
+        if (bot >= 0 && bot <= 0.3) {
+            pilihan_bot = 'gajah';
+        } else if (bot > 0.3 && bot <= 0.7) {
+            pilihan_bot = 'orang';
+        } else {
+            pilihan_bot = 'semut';
+        }
+
+        console.log(pilihan_bot);
+
+
+        let hasil = '';
+        if (pilihan == 'gajah') {
+            if (pilihan_bot == 'gajah') {
+                hasil = 'SERI';
+            } else if (pilihan_bot == 'orang') {
+                hasil = 'MENANG';
+            } else {
+                hasil = 'KALAH';
+            }
+        } else if (pilihan == 'orang') {
+            if (pilihan_bot == 'orang') {
+                hasil = 'SERI';
+            } else if (pilihan_bot == 'semut') {
+                hasil = 'MENANG';
+            } else {
+                hasil = 'KALAH';
+            }
+        } else if (pilihan == 'semut') {
+            if (pilihan_bot == 'semut') {
+                hasil = 'SERI';
+            } else if (pilihan_bot == 'gajah') {
+                hasil = 'MENANG';
+            } else {
+                hasil = 'KALAH';
+            }
+        } else {
+            hasil = 'KALAH';
+        }
+
+        console.log(hasil);
+
+        // $('#hasil').text(hasil);
+        // $('#komputer').attr('src', pilihan_bot + '.png');
+   
+
+        let random=['orang', 'semut', 'gajah'];
+            let index = 0;
+            let hitung= 0;
+    
+
+    //setInterval untuk looping di setiap milisecond
+    let putar = setInterval(function () {
+        if (index == 3) { //jika index gambar = 3, kembalikan ke awal gambar lagi di index 0}
+            index = 0;
+        }
+
+        $('#komputer').attr('src','img/' + random [index] + '.png');
+        index++;
+        hitung++;
+
+        //jika sudah berputar 10kali, hentikan
+        if(hitung==10){
+            clearInterval(putar);//untuk keluar dari looping interval
+            $('#hasil').text(hasil);
+
+            $('#komputer').attr('src','img/' + pilihan_bot + '.png');
+        }
+    }, 100); //looping setiap 100milisecond
+
+});
+
+</script>
+
+<body>
+    
+</body>
+</html>
